@@ -1,0 +1,20 @@
+name: Setup workspace
+description: Install Node.js, enable Corepack (Yarn 4) and install dependencies from the root lockfile.
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version-file: .nvmrc
+    - name: Enable Corepack
+      shell: bash
+      run: corepack enable
+    - name: Restore Yarn cache
+      uses: actions/cache@v4
+      with:
+        path: .yarn/cache
+        key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+        restore-keys: yarn-${{ runner.os }}-
+    - name: Install dependencies
+      shell: bash
+      run: yarn install --immutable
