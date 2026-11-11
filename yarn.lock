@@ -5030,9 +5030,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knex@npm:2.3.0":
-  version: 2.3.0
-  resolution: "knex@npm:2.3.0"
+"knex@npm:2.4.0":
+  version: 2.4.0
+  resolution: "knex@npm:2.4.0"
   dependencies:
     colorette: "npm:2.0.19"
     commander: "npm:^9.1.0"
@@ -5065,7 +5065,7 @@ __metadata:
       optional: true
   bin:
     knex: bin/cli.js
-  checksum: 10c0/5430683d6b64e9c51a961bcbfe80a11f12d1a70e51c0c9162e1c7ebace08cc232fed49c80651e1d3cf920b54d6c70fa8ce9e5a7e6608b3c181eae2815aa6aea0
+  checksum: 10c0/5b5fd0b57b2dea5680e218e4cb76291f0537c9b86e0c88913d1343e1785af391a86aaf84ec84924d1d2a441799b5f57a221975615d341bb3059f074951b6b9cb
   languageName: node
   linkType: hard
 
@@ -5763,7 +5763,7 @@ __metadata:
     "@types/react-dom": "npm:19.1.2"
     eslint: "npm:9.39.4"
     eslint-config-next: "npm:15.5.29"
-    knex: "npm:2.3.0"
+    knex: "npm:2.4.0"
     luxon: "npm:3.2.0"
     mysql2: "npm:3.23.1"
     next: "npm:15.5.29"
