@@ -5270,10 +5270,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:3.2.0":
-  version: 3.2.0
-  resolution: "luxon@npm:3.2.0"
-  checksum: 10c0/d345d49d175bf3d96f0562a927798221ce7d6d5e5af1497ee23f8a5462eb4c94e3b1e8f5ea3d213b6d26be4c24b393d5a308be675842fcd383146d990940fa0e
+"luxon@npm:3.2.1":
+  version: 3.2.1
+  resolution: "luxon@npm:3.2.1"
+  checksum: 10c0/2edd1400c7a785b01fa24ab491675c490a763054e0e147507b7b64caa6caad50329b48d482300c7ab5dc1a2630aaf84997496ffe7d2e166f9ea223f6caa719d9
   languageName: node
   linkType: hard
 
@@ -5764,7 +5764,7 @@ __metadata:
     eslint: "npm:9.39.4"
     eslint-config-next: "npm:15.5.29"
     knex: "npm:2.4.0"
-    luxon: "npm:3.2.0"
+    luxon: "npm:3.2.1"
     mysql2: "npm:3.23.1"
     next: "npm:15.5.29"
     react: "npm:19.1.2"
