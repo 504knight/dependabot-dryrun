@@ -19,7 +19,7 @@
     "@mui/material-nextjs": "9.3.0",
     "knex": "2.3.0",
     "luxon": "3.2.0",
-    "mysql2": "3.9.3",
+    "mysql2": "3.23.1",
     "next": "15.5.29",
     "react": "19.1.2",
     "react-dom": "19.1.2",
