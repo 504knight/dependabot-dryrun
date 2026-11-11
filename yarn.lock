@@ -5768,7 +5768,7 @@ __metadata:
     react: "npm:19.1.2"
     react-dom: "npm:19.1.2"
     typescript: "npm:5.9.3"
-    zod: "npm:3.22.2"
+    zod: "npm:4.6.6"
   languageName: unknown
   linkType: soft
 
@@ -7104,9 +7104,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:3.22.2":
-  version: 3.22.2
-  resolution: "zod@npm:3.22.2"
-  checksum: 10c0/10afd994bcec3affb81776adc486871bfa6790037f57f0e45280e99baed8c3df5f46c5ab65a6d7921a00dffd9fab299e4492519dd6bb5d2eb3de9a67d3eb8051
+"zod@npm:4.6.6":
+  version: 4.6.6
+  resolution: "zod@npm:4.6.6"
+  checksum: 10c0/447a3113bb743c54ab839213ff95e9e8c197cc1206f65270c18aac35aa70c47a5c8cab753be911b574df9a8a9801ea74ed6be776575232cae0084e51dab3e970
   languageName: node
   linkType: hard
