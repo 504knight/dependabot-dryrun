@@ -9,9 +9,6 @@ updates:
       interval: 'weekly'
       day: 'monday'
     open-pull-requests-limit: 10
-    labels:
-      - 'dependencies'
-      - 'npm'
     commit-message:
       prefix: 'deps'
       prefix-development: 'deps-dev'
@@ -25,7 +22,8 @@ updates:
       - dependency-name: '@types/node'
         update-types:
           - 'version-update:semver-major'
-    # A dependency joins the FIRST group it matches, so specific groups come before the catch-alls.
+    # A dependency that matches several groups joins the one with the most specific pattern
+    # (an exact name beats '@scope/*', which beats '*').
     groups:
       aws-sdk:
         patterns:
@@ -140,14 +138,19 @@ updates:
           - 'tsx'
         update-types:
           - 'major'
-      # Catch-alls: everything not matched above, minor and patch only (must stay last).
+      # Catch-alls: everything not matched above, minor and patch only. The '*' pattern keeps them
+      # less specific than the library groups; without it they claim '@mui/*' and '@aws-sdk/*'.
       dev-dependencies:
         dependency-type: 'development'
+        patterns:
+          - '*'
         update-types:
           - 'minor'
           - 'patch'
       production-dependencies:
         dependency-type: 'production'
+        patterns:
+          - '*'
         update-types:
           - 'minor'
           - 'patch'
@@ -169,9 +172,6 @@ updates:
       interval: 'weekly'
       day: 'monday'
     open-pull-requests-limit: 5
-    labels:
-      - 'dependencies'
-      - 'github-actions'
     groups:
       github-actions:
         patterns:
@@ -183,9 +183,6 @@ updates:
     schedule:
       interval: 'weekly'
       day: 'monday'
-    labels:
-      - 'dependencies'
-      - 'docker'
     ignore:
       - dependency-name: 'node'
         update-types:
