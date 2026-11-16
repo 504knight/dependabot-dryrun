@@ -1,14 +1,28 @@
 # Dependabot configuration, modeled on the production setup used in our CDK projects.
 # Docs: https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference
 version: 2
+
+# Credentials Dependabot uses to reach private registries. The token is a Dependabot secret
+# (Settings > Secrets and variables > Dependabot), not an Actions secret.
+registries:
+  github-packages:
+    type: npm-registry
+    url: https://npm.pkg.github.com
+    token: ${{secrets.DEPENDABOT_PACKAGES_TOKEN}}
+
 updates:
   # One entry covers the whole Yarn workspace: root package, portal/ and the single root yarn.lock.
   - package-ecosystem: 'npm'
     directory: '/'
+    registries:
+      - github-packages
     schedule:
       interval: 'weekly'
       day: 'monday'
     open-pull-requests-limit: 10
+    labels:
+      - 'dependencies'
+      - 'npm'
     commit-message:
       prefix: 'deps'
       prefix-development: 'deps-dev'
@@ -22,8 +36,7 @@ updates:
       - dependency-name: '@types/node'
         update-types:
           - 'version-update:semver-major'
-    # A dependency that matches several groups joins the one with the most specific pattern
-    # (an exact name beats '@scope/*', which beats '*').
+    # A dependency joins the FIRST group it matches, so specific groups come before the catch-alls.
     groups:
       aws-sdk:
         patterns:
@@ -138,19 +151,14 @@ updates:
           - 'tsx'
         update-types:
           - 'major'
-      # Catch-alls: everything not matched above, minor and patch only. The '*' pattern keeps them
-      # less specific than the library groups; without it they claim '@mui/*' and '@aws-sdk/*'.
+      # Catch-alls: everything not matched above, minor and patch only (must stay last).
       dev-dependencies:
         dependency-type: 'development'
-        patterns:
-          - '*'
         update-types:
           - 'minor'
           - 'patch'
       production-dependencies:
         dependency-type: 'production'
-        patterns:
-          - '*'
         update-types:
           - 'minor'
           - 'patch'
@@ -172,6 +180,9 @@ updates:
       interval: 'weekly'
       day: 'monday'
     open-pull-requests-limit: 5
+    labels:
+      - 'dependencies'
+      - 'github-actions'
     groups:
       github-actions:
         patterns:
@@ -183,6 +194,9 @@ updates:
     schedule:
       interval: 'weekly'
       day: 'monday'
+    labels:
+      - 'dependencies'
+      - 'docker'
     ignore:
       - dependency-name: 'node'
         update-types:
