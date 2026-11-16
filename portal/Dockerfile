@@ -2,14 +2,14 @@
 #   docker build -f portal/Dockerfile .
 # Training repo only: this image contains intentionally vulnerable dependencies. Never deploy it.
 
-FROM node:22.12-alpine AS deps
+FROM node:22.23-alpine AS deps
 WORKDIR /repo
 RUN corepack enable
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY portal/package.json portal/
 RUN yarn install --immutable
 
-FROM node:22.12-alpine AS build
+FROM node:22.23-alpine AS build
 WORKDIR /repo
 RUN corepack enable
 COPY --from=deps /repo/node_modules ./node_modules
@@ -17,7 +17,7 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN yarn workspace portal build
 
-FROM node:22.12-alpine AS runtime
+FROM node:22.23-alpine AS runtime
 WORKDIR /app
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000
 RUN addgroup -S app && adduser -S app -G app
