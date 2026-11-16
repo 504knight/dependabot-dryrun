@@ -1,0 +1,192 @@
+# Dependabot configuration, modeled on the production setup used in our CDK projects.
+# Docs: https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference
+version: 2
+updates:
+  # One entry covers the whole Yarn workspace: root package, portal/ and the single root yarn.lock.
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+    open-pull-requests-limit: 10
+    labels:
+      - 'dependencies'
+      - 'npm'
+    commit-message:
+      prefix: 'deps'
+      prefix-development: 'deps-dev'
+    # Wait before proposing brand-new releases (version updates only; security updates are never delayed).
+    cooldown:
+      semver-major-days: 14
+      semver-minor-days: 5
+      semver-patch-days: 3
+    ignore:
+      # Node major upgrades are planned by hand (Dockerfile, .nvmrc and CI together).
+      - dependency-name: '@types/node'
+        update-types:
+          - 'version-update:semver-major'
+    # A dependency joins the FIRST group it matches, so specific groups come before the catch-alls.
+    groups:
+      aws-sdk:
+        patterns:
+          - '@aws-sdk/*'
+          - '@smithy/*'
+        update-types:
+          - 'minor'
+          - 'patch'
+      aws-sdk-major:
+        patterns:
+          - '@aws-sdk/*'
+          - '@smithy/*'
+        update-types:
+          - 'major'
+      aws-cdk:
+        patterns:
+          - 'aws-cdk'
+          - 'aws-cdk-lib'
+          - 'constructs'
+        update-types:
+          - 'minor'
+          - 'patch'
+      aws-cdk-major:
+        patterns:
+          - 'aws-cdk'
+          - 'aws-cdk-lib'
+          - 'constructs'
+        update-types:
+          - 'major'
+      nextjs:
+        patterns:
+          - 'next'
+          - 'eslint-config-next'
+          - '@next/*'
+        update-types:
+          - 'minor'
+          - 'patch'
+      nextjs-major:
+        patterns:
+          - 'next'
+          - 'eslint-config-next'
+          - '@next/*'
+        update-types:
+          - 'major'
+      mui:
+        patterns:
+          - '@mui/*'
+          - '@emotion/*'
+        update-types:
+          - 'minor'
+          - 'patch'
+      mui-major:
+        patterns:
+          - '@mui/*'
+          - '@emotion/*'
+        update-types:
+          - 'major'
+      react-core:
+        patterns:
+          - 'react'
+          - 'react-dom'
+          - '@types/react'
+          - '@types/react-dom'
+        update-types:
+          - 'minor'
+          - 'patch'
+      react-core-major:
+        patterns:
+          - 'react'
+          - 'react-dom'
+          - '@types/react'
+          - '@types/react-dom'
+        update-types:
+          - 'major'
+      testing:
+        patterns:
+          - 'vitest'
+          - '@vitest/*'
+          - 'vite'
+        update-types:
+          - 'minor'
+          - 'patch'
+      testing-major:
+        patterns:
+          - 'vitest'
+          - '@vitest/*'
+          - 'vite'
+        update-types:
+          - 'major'
+      typescript-tooling:
+        patterns:
+          - 'typescript'
+          - '@types/*'
+          - 'typescript-eslint'
+          - '@typescript-eslint/*'
+          - 'eslint*'
+          - '@eslint/*'
+          - 'prettier'
+          - 'tsx'
+        update-types:
+          - 'minor'
+          - 'patch'
+      typescript-tooling-major:
+        patterns:
+          - 'typescript'
+          - '@types/*'
+          - 'typescript-eslint'
+          - '@typescript-eslint/*'
+          - 'eslint*'
+          - '@eslint/*'
+          - 'prettier'
+          - 'tsx'
+        update-types:
+          - 'major'
+      # Catch-alls: everything not matched above, minor and patch only (must stay last).
+      dev-dependencies:
+        dependency-type: 'development'
+        update-types:
+          - 'minor'
+          - 'patch'
+      production-dependencies:
+        dependency-type: 'production'
+        update-types:
+          - 'minor'
+          - 'patch'
+      # Security fixes (direct and transitive) bundled into one PR per run.
+      security-patches:
+        applies-to: 'security-updates'
+        patterns:
+          - '*'
+        update-types:
+          - 'patch'
+          - 'minor'
+
+  # GitHub Actions used by workflows and by the local composite action.
+  - package-ecosystem: 'github-actions'
+    directories:
+      - '/'
+      - '/.github/actions/*'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+    open-pull-requests-limit: 5
+    labels:
+      - 'dependencies'
+      - 'github-actions'
+    groups:
+      github-actions:
+        patterns:
+          - '*'
+
+  # Docker base images for the portal.
+  - package-ecosystem: 'docker'
+    directory: '/portal'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+    labels:
+      - 'dependencies'
+      - 'docker'
+    ignore:
+      - dependency-name: 'node'
+        update-types:
+          - 'version-update:semver-major'
